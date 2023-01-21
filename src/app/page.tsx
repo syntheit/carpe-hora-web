@@ -1,5 +1,18 @@
-export default function Home() {
-  return (
-    <p className="font-sans hover:font-bold">Hello, World!</p>
-  )
+import Timeline from '../components/Dashboard/Timeline'
+
+export default function Dashboard() {
+    return (
+        <div className="flex flex-row gap-10 h-screen w-screen bg-white p-10">
+            <div className="bg-black flex-initial w-1/4 rounded-[20px]">
+                <Timeline/>
+            </div>
+            <div className="flex flex-col gap-10 grow">
+                <div className="flex flex-row gap-10 flex-initial h-[30vh]">
+                    <div className="bg-black grow rounded-[20px]">Record Activity</div>
+                    <div className="invisible flex-initial w-[30vh]"/>
+                </div>
+                <div className="bg-black grow rounded-[20px]">Two Week Overview</div>
+            </div>
+        </div>
+    );
 }
