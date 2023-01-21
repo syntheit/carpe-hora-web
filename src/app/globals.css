@@ -9,3 +9,14 @@
   font-display: optional;
   src: url(/fonts/Inter-VariableFont_slnt,wght.woff2) format("woff2");
 }
+
+@layer components {
+  .box_shadow {
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .container {
+    background-color: #161719;
+    border-radius: 20px;
+  }
+}
