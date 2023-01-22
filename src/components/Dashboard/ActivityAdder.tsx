@@ -12,7 +12,7 @@ export default function ActivityAdder() {
   const [duration, setDuration] = useState(0);
 
   return (
-    <div className="flex flex-col gap-4 bg-black rounded-3xl p-8 grow">
+    <div className="flex flex-col gap-4 bg-black rounded-3xl p-8 grow box_shadow">
       <div className="text-[25px] capitalize text-white font-semibold">
         Add Activity
       </div>
