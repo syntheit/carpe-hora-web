@@ -4,6 +4,7 @@ export type Event = {
     category: number,
     start: number,
     duration: number,
+    date: string,
 };
 
 type Category = {
@@ -31,6 +32,11 @@ function TimeToString(hour: number) {
     return time + ":00 " + (hour < 12 ? "AM" : "PM");
 }
 
+export function GetDate() {
+    let yourDate = new Date()
+    return yourDate.toISOString().split('T')[0]
+}
+
 export default function TimelineEntry(props: {event: Event}) {
     return (
         <div className={`bg-${categories[props.event.category].color} flex-initial h-24 rounded-lg p-4 relative z-50`}>
@@ -38,8 +44,13 @@ export default function TimelineEntry(props: {event: Event}) {
                 <div className={`text-[25px] capitalize text-white font-semibold`}>
                     {categories[props.event.category].name}
                 </div>
-                <div className={`text-[15px] capitalize text-white font-normal`}>
-                    {TimeToString(props.event.start) + " - " + TimeToString((props.event.start + props.event.duration) % 24)}
+                <div className="flex flex-row gap-4">
+                    <div className={`text-[15px] capitalize text-white font-normal`}>
+                        {TimeToString(props.event.start) + " - " + TimeToString((props.event.start + props.event.duration) % 24)}
+                    </div>
+                    <div className={`text-[15px] capitalize text-white font-normal`}>
+                        {GetDate()}
+                    </div>
                 </div>
             </div>
         </div>

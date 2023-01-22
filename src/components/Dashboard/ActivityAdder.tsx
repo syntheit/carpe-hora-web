@@ -1,50 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { auth } from "@/constants/firebase";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Event } from "./TimelineEntry";
+import { GetDate } from "./TimelineEntry";
+import { useContext } from 'react';
+import React from "react";
 
-const addEvent = (e: Event) => {};
+const addEvent = (e: Event) => {
+    const user = auth.currentUser;
+    const url = `http://localhost:3000/api/events`;
+    let token = "";
+    
+    if (user && token != user.uid) {
+        console.log("Setting token to " + user.uid);
+        token = user.uid;
+    }
+
+    console.log(JSON.stringify(e));
+
+    return fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`
+        },
+
+        body: JSON.stringify(e),
+    }).then((res) => res.json());
+};
 
 //Next.js component dropdown menu for adding activities to the dashboard
-export default function ActivityAdder() {
+export default function ActivityAdder(redraw: {setRedraw: Dispatch<SetStateAction<boolean>>}) {
   const [category, setCategory] = useState(0);
   const [start, setStart] = useState(0);
   const [duration, setDuration] = useState(0);
 
   return (
     <div className="flex flex-col gap-4 bg-black rounded-3xl p-8 grow">
-      <div className="text-[25px] capitalize text-white font-semibold">
+      <div className="text-[50px] capitalize text-white font-semibold">
         Add Activity
       </div>
       <div className="flex flex-row gap-4">
         <div className="flex flex-col gap-2 flex-1">
-          <div className="text-[15px] capitalize text-white font-semibold">
+          <div className="text-[30px] capitalize text-white font-semibold">
             Category
           </div>
           <select
             onChange={(e) =>
               setCategory(+e.target.options[e.target.selectedIndex].value)
             }
-            className={`bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[15px] capitalize text-white font-semibold`}
+            className={`bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[30px] capitalize text-white font-semibold`}
           >
-            <option value="Sleep">Sleep</option>
-            <option value="Work">Work</option>
-            <option value="Exercise">Exercise</option>
-            <option value="Eat">Eat</option>
-            <option value="Socialize">Socialize</option>
-            <option value="Relax">Relax</option>
-            <option value="Other">Other</option>
+            <option value="0">Sleep</option>
+            <option value="1">Work</option>
+            <option value="2">Exercise</option>
+            <option value="3">Eat</option>
+            <option value="4">Socialize</option>
+            <option value="5">Relax</option>
+            <option value="6">Other</option>
           </select>
         </div>
         <div className="flex flex-col gap-2 flex-1">
-          <div className="text-[15px] capitalize text-white font-semibold">
+          <div className="text-[30px] capitalize text-white font-semibold">
             Start Time
           </div>
           <select
             onChange={(e) =>
               setStart(+e.target.options[e.target.selectedIndex].value)
             }
-            className="bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[15px] capitalize text-white font-semibold"
+            className="bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[30px] capitalize text-white font-semibold"
           >
             <option value="0">12:00 AM</option>
             <option value="1">1:00 AM</option>
@@ -73,14 +98,14 @@ export default function ActivityAdder() {
           </select>
         </div>
         <div className="flex flex-col gap-2 flex-1">
-          <div className="text-[15px] capitalize text-white font-semibold">
+          <div className="text-[30px] capitalize text-white font-semibold">
             Duration
           </div>
           <select
             onChange={(e) =>
               setDuration(+e.target.options[e.target.selectedIndex].value)
             }
-            className="bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[15px] capitalize text-white font-semibold"
+            className="bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[30px] capitalize text-white font-semibold"
           >
             {[...Array(24)].map((_, i) => {
               return (
@@ -93,7 +118,7 @@ export default function ActivityAdder() {
         </div>
         <button
           onClick={() =>
-            addEvent({ category: category, start: start, duration: duration })
+            {addEvent({ category: category, start: start, duration: duration, date: GetDate() }); redraw.setRedraw(true);}
           }
           className="bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[30px] capitalize text-white font-semibold m-4"
         >

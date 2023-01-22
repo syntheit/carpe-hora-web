@@ -1,11 +1,11 @@
 'use client'
 
 import TimelineEntry from "./TimelineEntry";
-import {Event} from "./TimelineEntry"
+import { Event } from "./TimelineEntry"
 import { auth } from "@/constants/firebase";
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useEffect, useLayoutEffect, Dispatch, SetStateAction } from 'react'
 
-export default function Timeline() {
+export default function Timeline(redraw: {setRedraw: Dispatch<SetStateAction<boolean>>}) {
     const [events, setEvents] = useState<Array<Event>>([]);
     const [loading, setLoading] = useState(false)
 
@@ -21,7 +21,7 @@ export default function Timeline() {
             token = user.uid;
         }
         
-        const res = fetch(url, {
+        fetch(url, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
