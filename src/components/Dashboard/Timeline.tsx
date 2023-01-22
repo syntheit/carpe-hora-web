@@ -7,7 +7,7 @@ export default function Timeline(props: {events: Event[]}) {
             <div className="text-[50px] capitalize text-white font-semibold">Your Timeline</div>
             <div className="flex flex-col gap-4 grow">
                 {props.events.map((e) => 
-                    <TimelineEntry event={e} key={e.category + e.start + e.end}/>
+                    <TimelineEntry event={e} key={e.category ^ e.start ^ e.duration}/>
                 )}
             </div>
         </div>

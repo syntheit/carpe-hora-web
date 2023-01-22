@@ -3,7 +3,7 @@ type Color = `#${string}`;
 export type Event = {
     category: number,
     start: number,
-    end: number,
+    duration: number,
 };
 
 type Category = {
@@ -11,7 +11,7 @@ type Category = {
     name: string,
 };
 
-const categories: Category[] = [
+export const categories: Category[] = [
     {color: "red-600", name: "Sleep"}, 
     {color: "orange-600", name: "Work"},
     {color: "green-600", name: "Exercise"}, 
@@ -39,7 +39,7 @@ export default function TimelineEntry(props: {event: Event}) {
                     {categories[props.event.category].name}
                 </div>
                 <div className={`text-[15px] capitalize text-white font-normal`}>
-                    {TimeToString(props.event.start) + " - " + TimeToString(props.event.end)}
+                    {TimeToString(props.event.start) + " - " + TimeToString((props.event.start + props.event.duration) % 24)}
                 </div>
             </div>
         </div>
