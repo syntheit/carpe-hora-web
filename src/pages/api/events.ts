@@ -61,14 +61,12 @@ export default async function handler(
         res.status(200).json({events: events});
       break;
     case 'POST':
-      console.log (req.body);
       for (let i = req.body.start; i < req.body.start + req.body.duration; i++) {
         hours[i] = req.body.category;
       }
 
-      console.log(hours);
-
       setDoc(daySnapshot, {hours: hours});
+      res.status(200).json({events: []});
     }
 
 }

@@ -17,7 +17,7 @@ export const categories: Category[] = [
     {color: "orange-600", name: "Work"},
     {color: "green-600", name: "Exercise"}, 
     {color: "blue-600", name: "Eat"}, 
-    {color: "fuchia-600", name: "Socialize"}, 
+    {color: "fuchsia-600", name: "Socialize"}, 
     {color: "pink-600", name: "Relax"}, 
     {color: "slate-600", name: "Other"}
 ];

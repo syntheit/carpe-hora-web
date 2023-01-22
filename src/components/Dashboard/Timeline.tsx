@@ -5,11 +5,11 @@ import { Event } from "./TimelineEntry"
 import { auth } from "@/constants/firebase";
 import { useState, useEffect, useLayoutEffect, Dispatch, SetStateAction } from 'react'
 
-export default function Timeline(redraw: {setRedraw: Dispatch<SetStateAction<boolean>>}) {
+export default function Timeline({count}: {count: number}) {
     const [events, setEvents] = useState<Array<Event>>([]);
     const [loading, setLoading] = useState(false)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         setLoading(true);
         
         const user = auth.currentUser;
@@ -17,7 +17,6 @@ export default function Timeline(redraw: {setRedraw: Dispatch<SetStateAction<boo
         let token = "";
     
         if (user && token != user.uid) {
-            console.log("Setting token to " + user.uid);
             token = user.uid;
         }
         
@@ -31,10 +30,11 @@ export default function Timeline(redraw: {setRedraw: Dispatch<SetStateAction<boo
         .then((events) => {
           setEvents(events.events)
           setLoading(false)
+          
         })
 
         setLoading(false);
-    }, []);
+    }, [count]);
 
     if (loading) return <div className="text-[50px] capitalize text-white font-semibold">Loading...</div>
     if (!events) return <div className="text-[50px] capitalize text-white font-semibold">No events</div>
@@ -44,7 +44,7 @@ export default function Timeline(redraw: {setRedraw: Dispatch<SetStateAction<boo
             <div className="text-[50px] capitalize text-white font-semibold">Your Timeline</div>
             <div className="flex flex-col gap-4 grow">
                 {events.map((e) => 
-                    <TimelineEntry event={e} key={e.category ^ e.start ^ e.duration}/>
+                    <TimelineEntry event={e} key={2 * e.category + 3 * e.start + 5 * e.duration}/>
                 )}
             </div>
         </div>

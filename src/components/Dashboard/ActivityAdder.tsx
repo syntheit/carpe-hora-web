@@ -6,20 +6,19 @@ import { Event } from "./TimelineEntry";
 import { GetDate } from "./TimelineEntry";
 import { useContext } from 'react';
 import React from "react";
+import { useRouter } from 'next/navigation'
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 
-const addEvent = (e: Event) => {
+const addEvent = async (e: Event, update: (val: boolean) => void) => {
     const user = auth.currentUser;
     const url = `http://localhost:3000/api/events`;
     let token = "";
     
     if (user && token != user.uid) {
-        console.log("Setting token to " + user.uid);
         token = user.uid;
     }
 
-    console.log(JSON.stringify(e));
-
-    return fetch(url, {
+    fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,11 +26,11 @@ const addEvent = (e: Event) => {
         },
 
         body: JSON.stringify(e),
-    }).then((res) => res.json());
+    }).then((res) => res.json()).then((res) => {update(true)}).finally(() => {update(true)}).catch((err) => {update(true)});
 };
 
 //Next.js component dropdown menu for adding activities to the dashboard
-export default function ActivityAdder(redraw: {setRedraw: Dispatch<SetStateAction<boolean>>}) {
+export default function ActivityAdder({update}: {update: (val: boolean) => void}) {
   const [category, setCategory] = useState(0);
   const [start, setStart] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -118,7 +117,7 @@ export default function ActivityAdder(redraw: {setRedraw: Dispatch<SetStateActio
         </div>
         <button
           onClick={() =>
-            {addEvent({ category: category, start: start, duration: duration, date: GetDate() }); redraw.setRedraw(true);}
+            {addEvent({ category: category, start: start, duration: duration, date: GetDate()}, update);}
           }
           className="bg-zinc-700 hover:bg-zinc-800 rounded-lg p-2 text-[30px] capitalize text-white font-semibold m-4"
         >
