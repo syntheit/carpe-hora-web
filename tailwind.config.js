@@ -17,4 +17,5 @@ module.exports = {
     },
   },
   plugins: [],
+  safelist: ["bg-red-600", "bg-green-600", "bg-blue-600", "bg-fuschia-600", "bg-slate-600", "bg-pink-600", "bg-orange-600"],
 };
