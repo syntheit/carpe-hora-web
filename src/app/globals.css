@@ -34,6 +34,13 @@
     border-radius: 20px;
     @apply bg-[#282A2E];
   }
+
+  .reg_button {
+    background-color: #282A2E;
+    box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    @apply w-40 h-14 flex items-center justify-center cursor-pointer;
+  }
 }
 
 option {
