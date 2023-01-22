@@ -1,11 +1,13 @@
 import Timeline from '@/components/Dashboard/Timeline'
+import { Event } from '@/components/Dashboard/TimelineEntry';
 import ActivityAdder from '@/components/Dashboard/ActivityAdder';
+import { auth } from '@/constants/firebase';
 
 export default function Dashboard() {
   return (
     <div className="flex gap-10 h-full w-screen px-10">
       <div className="bg-black flex-initial w-1/4 rounded-3xl">
-        <Timeline events={[{category: 1, start: 0, duration: 10}]} />
+        <Timeline/>
       </div>
       <div className="flex flex-col gap-10 grow">
         <div className="flex flex-row gap-10 flex-initial h-[30vh]">
