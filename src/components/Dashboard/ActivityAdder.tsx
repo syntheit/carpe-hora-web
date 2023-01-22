@@ -1,7 +1,7 @@
 //Next.js component dropdown menu for adding activities to the dashboard
 export default function ActivityAdder(props: { setEvents: (events: Event[]) => void, events: Event[] }) {
     return (
-        <div className="flex flex-col gap-4 bg-black rounded-3xl p-8 w-full h-full">
+        <div className="flex flex-col gap-4 bg-black rounded-3xl p-8 grow">
             <div className="text-[25px] capitalize text-white font-semibold">Add Activity</div>
             <div className="flex flex-row gap-4">
                 <div className="flex flex-col gap-2">

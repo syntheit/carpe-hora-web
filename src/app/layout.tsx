@@ -1,3 +1,4 @@
+import Paginator from "@/components/Paginator/Paginator";
 import "./globals.css";
 
 export default function RootLayout({
@@ -7,9 +8,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-black">
-        <div>{children}</div>
-        <div></div>
+      <body className="flex justify-center p-10 text-white">
+        <div className="">{children}</div>
+        <div className="absolute flex flex-col right-10 h-[30vh] w-[30vh]">
+          <Paginator />
+          <div className="flex flex-col p-4 container h-[12vh] w-[30vh] mt-8">
+            <h3 className="text-2xl font-bold">Carpe Hora</h3>
+            <p className="w-8/12 text-xl">Budget your time like money</p>
+          </div>
+        </div>
       </body>
     </html>
   );
